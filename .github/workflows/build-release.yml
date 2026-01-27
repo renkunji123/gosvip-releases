@@ -1,0 +1,47 @@
+name: Auto Release
+
+on:
+  push:
+    branches: [main, master, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Delete old release
+        run: |
+          gh release delete tool --yes || true
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_CUSTOM }}
+      
+      - name: Delete old tag
+        run: |
+          git push origin --delete tool || true
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_CUSTOM }}
+      
+      - name: Create tag
+        run: |
+          git tag tool
+          git push origin tool
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_CUSTOM }}
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: tool
+          name: Auto build - Junk Code + PyArmor + Nuitka
+          draft: false
+          prerelease: false
+          files: |
+            *.md
+            LICENSE
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_CUSTOM }}
