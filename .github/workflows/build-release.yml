@@ -16,13 +16,13 @@ jobs:
       
       - name: Delete old release
         run: |
-          gh release delete tool --yes || true
+          gh release delete Tool --yes || true
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_CUSTOM }}
       
       - name: Delete old tag
         run: |
-          git push origin --delete tool || true
+          git push origin --delete Tool || true
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_CUSTOM }}
       
