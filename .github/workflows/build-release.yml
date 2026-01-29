@@ -28,8 +28,8 @@ jobs:
       
       - name: Create tag
         run: |
-          git tag tool
-          git push origin tool
+          git tag Tool
+          git push origin Tool
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_CUSTOM }}
       
