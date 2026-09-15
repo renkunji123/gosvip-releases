@@ -13,6 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          lfs: true
+
+      - name: Package Windows executable
+        run: |
+          zip -9 -j gosvip-tool.zip ./*.exe
       
       - name: Delete old release
         run: |
@@ -40,5 +46,7 @@ jobs:
           name: Auto build - Junk Code + PyArmor + Nuitka
           draft: false
           prerelease: false
+          fail_on_unmatched_files: true
+          files: gosvip-tool.zip
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_CUSTOM }}
